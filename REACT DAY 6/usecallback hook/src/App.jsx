@@ -1,12 +1,19 @@
-import { useCallback, useEffect, useState ,useRef} from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
+import Child from "./Child";
 
 function App() {
   const [lengthmax, setLength] = useState(8);
   const [numAllowed, setNumAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
   const [password, setPassword] = useState("");
+  const [count, setCount] = useState(0);
+
+  const learn = useCallback(() => {
+    //some operation
+  }, []);
+
   //usered hook
-  const passwordRef = useRef(null)
+  const passwordRef = useRef(null);
 
   const passGen = useCallback(() => {
     let pass = "";
@@ -25,14 +32,14 @@ function App() {
     setPassword(pass);
   }, [lengthmax, numAllowed, charAllowed, setPassword]);
 
-  const copyPassToClipboard = useCallback(()=>{
-    passwordRef.current?.select()
+  const copyPassToClipboard = useCallback(() => {
+    passwordRef.current?.select();
     //passwordRef.current?.setSelectionRange(0,4)
-    window.navigator.clipboard.writeText(password)
-  },[password])
-  useEffect(()=>{
-  passGen()
-  },[lengthmax,numAllowed,charAllowed,passGen])
+    window.navigator.clipboard.writeText(password);
+  }, [password]);
+  useEffect(() => {
+    passGen();
+  }, [lengthmax, numAllowed, charAllowed, passGen]);
 
   return (
     <>
@@ -50,7 +57,10 @@ function App() {
               readOnly
               ref={passwordRef}
             />
-            <button onClick={copyPassToClipboard} className="outline-none bg-slate-900 text-white px-3 py-0.5 shrink-0">
+            <button
+              onClick={copyPassToClipboard}
+              className="outline-none bg-slate-900 text-white px-3 py-0.5 shrink-0"
+            >
               Copy
             </button>
           </div>
@@ -92,6 +102,18 @@ function App() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="flex w-60 h-60 bg-white text-gray-800">
+        <Child learn={learn} count={count} />
+        <h1>Count : {count}</h1>
+        <button
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
+          Count
+        </button>
       </div>
     </>
   );
