@@ -5,15 +5,15 @@ import { useState } from "react";
 function TodoItem({ todo }) {
   const [istodoEditable, setIstodoEditable] = useState(false);
   const [todoMsg, setTodoMsg] = useState(todo.todo);
-  const { updateTodo, deleteTodo, toggleComplete } = useTodo;
+  const { updateTodo, deleteTodo, toggleComplete } = useTodo();
 
   const editTodo = () => {
     updateTodo(todo.id, { ...todo, todo: todoMsg });
     setIstodoEditable(false)
-    const toggleCompleted =()=>{
-          toggleComplete(todo.id)
-    }
   };
+  const toggleCompleted=()=>{
+    toggleComplete(todo.id)
+}
 
   return (
     <div
@@ -25,7 +25,7 @@ function TodoItem({ todo }) {
         type="checkbox"
         className="cursor-pointer"
         checked={todo.complete}
-        onChange={toggleComplete}
+        onChange={toggleCompleted}
       />
       <input
         type="text"
