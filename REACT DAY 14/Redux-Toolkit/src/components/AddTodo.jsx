@@ -9,7 +9,8 @@ const AddTodos = () => {
 
   const addTodoHandler = (e) => {
     e.preventDefault();
-    dispatch(addTodo(input));
+    if (!input.trim()) return; // Prevent submission if input is empty or only whitespace
+    dispatch(addTodo(input.trim()));
     setInput("");
   };
 
